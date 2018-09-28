@@ -96,11 +96,10 @@
 
                     accountService.register(userInfo)
                         .then(data => {
-                            localStorage.setItem('user', JSON.stringify(data));
                             this.$router.push({
                                 name: 'login',
                                 query: {
-                                    username: this.username
+                                    username: data.username
                                 }
                             })
                         })

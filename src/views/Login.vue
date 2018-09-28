@@ -7,14 +7,25 @@
                     <div class="form-group">
                         <input type="text" class="form-control" id="username" aria-describedby="emailHelp"
                                placeholder="Enter username"
-                               v-model="username">
+                               v-model="username"
+                               @focus="error.username = ''">
+                        <small class="error-message text-danger"
+                               v-if="error.username !== ''">
+                            *{{error.username}}
+                        </small>
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" id="password" aria-describedby="emailHelp"
-                               placeholder="Enter password">
+                               placeholder="Enter password"
+                               v-model="password"
+                               @focus="error.password = ''">
+                        <small class="error-message text-danger"
+                               v-if="error.password !== ''">
+                            *{{error.password}}
+                        </small>
                     </div>
 
-                    <button id="btn-login" class="btn btn-info btn-block">Login</button>
+                    <button id="btn-login" class="btn btn-info btn-block" @click="onLogin">Login</button>
 
                     <div id="register-area" class="row justify-content-center">
                         <small>
@@ -30,16 +41,63 @@
 </template>
 
 <script>
+
+    import accountService from '../shared/services/account.service'
+
     export default {
         name: "Login",
         data: function () {
             return {
                 username: '',
-                password: ''
+                password: '',
+                error: {
+                    username: '',
+                    password: ''
+                }
             }
         },
         mounted: function () {
-            this.username = this.$route.query.username;
+            this.username = this.$route.query.username || '';
+        },
+        methods: {
+            onLogin: function () {
+                if (this.checkForm()) {
+                    const userInfo = {
+                        username: this.username,
+                        password: this.password,
+                    };
+
+                    accountService.login(userInfo)
+                        .then(data => {
+                            const {access_token, user} = data;
+
+                            localStorage.setItem('user', JSON.stringify(user));
+                            localStorage.setItem('access_token', access_token);
+
+                            this.$router.push('/chat');
+                        })
+                        .catch(error => {
+                            alert(error)
+                        })
+
+                }
+            },
+            checkForm: function () {
+                let isOk = true;
+
+                if (!this.username) {
+
+                    this.error.username = 'Username is required';
+                    isOk = false
+                }
+
+                if (!this.password) {
+                    this.error.password = 'Password is required';
+                    isOk = false
+                }
+
+                return isOk;
+            }
         }
     }
 </script>
@@ -52,4 +110,12 @@
     #btn-login, #register-area {
         margin-top: 20px;
     }
+
+    .error-message {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding-left: .5em;
+    }
+
 </style>
