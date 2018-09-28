@@ -104,6 +104,10 @@
 </script>
 
 <style scoped>
+    .login-layout {
+        padding-top: 50px;
+    }
+
     .login-form {
         margin-top: 50px;
     }

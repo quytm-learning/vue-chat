@@ -143,6 +143,10 @@
 </script>
 
 <style scoped>
+    .register-layout {
+        padding-top: 50px;
+    }
+
     .register-form {
         margin-top: 50px;
     }
