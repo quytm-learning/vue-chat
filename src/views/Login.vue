@@ -42,7 +42,8 @@
 
 <script>
 
-    import accountService from '../shared/services/account.service'
+    import accountService from '../shared/services/auth.service'
+    import storage from '../shared/storage'
 
     export default {
         name: "Login",
@@ -71,8 +72,8 @@
                         .then(data => {
                             const {access_token, user} = data;
 
-                            localStorage.setItem('user', JSON.stringify(user));
-                            localStorage.setItem('access_token', access_token);
+                            storage.setAccessToken(access_token);
+                            storage.setUserInfo(JSON.stringify(user));
 
                             this.$router.push('/chat');
                         })

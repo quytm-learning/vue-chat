@@ -64,7 +64,7 @@
 
 <script>
 
-    import accountService from '../shared/services/account.service'
+    import accountService from '../shared/services/auth.service'
 
     export default {
         name: "Register",

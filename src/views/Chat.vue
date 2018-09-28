@@ -5,8 +5,14 @@
 </template>
 
 <script>
+
+    import storage from '../shared/storage'
+
     export default {
-        name: "Chat"
+        name: "Chat",
+        beforeRouteEnter: function(to, from, next) {
+            next(storage.isLoggedIn());
+        },
     }
 </script>
 
