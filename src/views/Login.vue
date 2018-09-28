@@ -6,7 +6,8 @@
                 <div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="username" aria-describedby="emailHelp"
-                               placeholder="Enter username">
+                               placeholder="Enter username"
+                               v-model="username">
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" id="password" aria-describedby="emailHelp"
@@ -30,7 +31,16 @@
 
 <script>
     export default {
-        name: "Login"
+        name: "Login",
+        data: function () {
+            return {
+                username: '',
+                password: ''
+            }
+        },
+        mounted: function () {
+            this.username = this.$route.query.username;
+        }
     }
 </script>
 

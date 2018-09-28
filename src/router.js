@@ -30,6 +30,11 @@ export default new Router({
             path: '/login',
             name: 'login',
             component: () => import(/* webpackChunkName: "about" */ './views/Login')
+        },
+        {
+            path: '/chat',
+            name: 'chat',
+            component: () => import(/* webpackChunkName: "about" */ './views/Chat')
         }
     ]
 })

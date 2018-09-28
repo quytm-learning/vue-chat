@@ -63,6 +63,9 @@
 </template>
 
 <script>
+
+    import accountService from '../shared/services/account.service'
+
     export default {
         name: "Register",
         data: function () {
@@ -81,11 +84,33 @@
         },
         methods: {
             onRegister: function () {
-                if (this.onCheckForm()) {
-                    alert('Prepare request server')
+                if (this.checkForm()) {
+                    const userInfo = {
+                        email: this.email,
+                        password: this.password,
+                        username: this.username,
+                        phone: this.phone,
+                        name: '',
+                        gender: ''
+                    };
+
+                    accountService.register(userInfo)
+                        .then(data => {
+                            localStorage.setItem('user', JSON.stringify(data));
+                            this.$router.push({
+                                name: 'login',
+                                query: {
+                                    username: this.username
+                                }
+                            })
+                        })
+                        .catch(error => {
+                            alert(error)
+                        })
+
                 }
             },
-            onCheckForm: function () {
+            checkForm: function () {
                 let isOk = true;
 
                 if (!this.email) {
