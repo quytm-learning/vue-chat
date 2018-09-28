@@ -2,7 +2,7 @@
     <div class="login-layout container-fluid">
         <h1>Login</h1>
         <div class="row justify-content-center">
-            <div class="login-form col-md-6">
+            <div class="login-form col-md-3">
                 <div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="username" aria-describedby="emailHelp"
